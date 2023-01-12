@@ -13,7 +13,7 @@ fi
 
 # get subject and existing subjects
 SUBJECT=REPLACEME/$1.md
-EXISTING_SUBJECTS=$(ls -1 /home/ogataj/notebooks | grep '.md$' | cut -f1 -d'.' | sort | uniq)
+EXISTING_SUBJECTS=$(ls -1 REPLACEME | grep '.md$' | cut -f1 -d'.' | sort | uniq)
 
 # if subject does not exist, ask to add
 # warning: if you have a subject called "yes", then grep will
