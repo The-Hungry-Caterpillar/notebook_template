@@ -21,7 +21,6 @@ EXISTING_SUBJECTS=$(ls -1 REPLACEME | grep '.md$' | grep -v 'README' | cut -f1 -
 #   'y', 'e', or 's' will not prompt the user to create a new
 #   subject. Need to fix this.
 if [[ -z $(echo ${EXISTING_SUBJECTS} | grep "$(basename ${SUBJECT} \.md)") ]]; then
-    echo $(basename ${SUBJECT})
     echo "Subject does not exist. Here are existing subjects: "
     echo ${EXISTING_SUBJECTS}
     echo ""
