@@ -1,0 +1,59 @@
+#!/bin/bash
+
+# NOTE: Must run install.sh first!
+# Usage; open "General" notebook:
+#   ```notebook General```
+
+
+# stop if no subject provided
+if [[ -z $1 ]]; then
+    echo "must input subject."
+    exit 1
+fi
+
+# get subject and existing subjects
+SUBJECT=/home/ogataj/notebooks/$1.md
+EXISTING_SUBJECTS=$(ls -1 /home/ogataj/notebooks | grep '.md$' | cut -f1 -d'.' | sort | uniq)
+
+# if subject does not exist, ask to add
+# warning: if you have a subject called "yes", then grep will
+#   pick up 'y', 'e', and 's', and so notebook subjects called
+#   'y', 'e', or 's' will not prompt the user to create a new
+#   subject. Need to fix this.
+if [[ -z $(echo ${EXISTING_SUBJECTS} | grep "$(basename ${SUBJECT} \.md)") ]]; then
+    echo $(basename ${SUBJECT})
+    echo "Subject does not exist. Here are existing subjects: "
+    echo ${EXISTING_SUBJECTS}
+    echo ""
+    read -p "Create new subject? " ANSWER
+    if [[ ${ANSWER} != yes ]]; then
+        echo "ok bye"
+        exit 0
+    fi
+    touch ${SUBJECT}
+fi
+
+# formats date as dd-mm-yyyy
+DATE=$(date +%d-%B-%Y)
+
+# open entry in notebook
+if [[ -z $(grep ${DATE} ${SUBJECT}) ]];then
+    echo "" >> ${SUBJECT}
+    echo "" >> ${SUBJECT}
+    echo "# ${DATE}" >> ${SUBJECT}
+    echo "" >> ${SUBJECT}
+    vim ${SUBJECT}
+else
+    echo "" >> ${SUBJECT}
+    vim ${SUBJECT}
+fi
+
+read -p "Push changes to Github? " ANSWER
+
+# add, commit, and push changes
+if [[ $ANSWER = yes ]]; then
+    git -C /home/ogataj/notebooks add ${SUBJECT}
+    git -C /home/ogataj/notebooks commit ${SUBJECT} -m 'update'
+    git -C /home/ogataj/notebooks push
+fi
+
