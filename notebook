@@ -12,7 +12,7 @@ if [[ -z $1 ]]; then
 fi
 
 # get subject and existing subjects
-SUBJECT=/home/ogataj/notebooks/$1.md
+SUBJECT=REPLACEME/$1.md
 EXISTING_SUBJECTS=$(ls -1 /home/ogataj/notebooks | grep '.md$' | cut -f1 -d'.' | sort | uniq)
 
 # if subject does not exist, ask to add
@@ -52,8 +52,8 @@ read -p "Push changes to Github? " ANSWER
 
 # add, commit, and push changes
 if [[ $ANSWER = yes ]]; then
-    git -C /home/ogataj/notebooks add ${SUBJECT}
-    git -C /home/ogataj/notebooks commit ${SUBJECT} -m 'update'
-    git -C /home/ogataj/notebooks push
+    git -C REPLACEME add ${SUBJECT}
+    git -C REPLACEME commit ${SUBJECT} -m 'update'
+    git -C REPLACEME push
 fi
 
