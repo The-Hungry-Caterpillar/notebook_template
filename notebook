@@ -51,8 +51,10 @@ read -p "Push changes to Github? " ANSWER
 
 # add, commit, and push changes
 if [[ $ANSWER = yes ]]; then
-    git -C REPLACEME add ${SUBJECT}
-    git -C REPLACEME commit ${SUBJECT} -m 'update'
-    git -C REPLACEME push
+    pushd REPLACEME
+    git add ${SUBJECT}
+    git commit ${SUBJECT} -m 'update'
+    git push
+    popd
 fi
 
